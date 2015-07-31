@@ -242,28 +242,24 @@ In choosing the true course completion rates, we assume that---on average across
     \item Sample size: 10, 50, and 100 percent of the actual sample size of 23,461 students.
 \end{itemize}
 
-\begin{table}
-    \linespread{0.9}
-\centering
-\caption{Three possible values of the difference in the probability of course completion of students assigned to effective versus ineffective treatment arms.}
-\label{my-label}
-\begin{tabular}{rSSS}
-\thead{Mean effect size,\\
-       averaging across \\countries} 
-    &   \multicolumn{2}{c}{\thead{Probability of \\ 
-                                  course completion (\%)}}
-            &   {\thead{Difference}}                           \\
-    &   {\thead{Ineffective\\ arms}}
-        &   {\thead{Effective\\ arms}} 
-            &                                                   \\
-    \hline
-Small   & 4.6   & 5.3   & 0.8 \\
-Medium  & 4.6   & 8.5   & 3.9 \\
-Large   & 4.6   & 13.3  & 8.7
-\end{tabular}
+\begin{table}[! htbp]\captionsetup{font=bf}
+  \centering\setlength\tabcolsep{8pt}
+  \caption{Three possible values of the difference in the probability of course completion of students assigned to effective versus ineffective treatment arms.}
+  \label{my-label}
+  \begin{tabularx}{\linewidth}{XSS[table-format=2.1]S}
+    & \multicolumn{2}{l}{\thead{Probability of \\ course completion (\%)}}
+    & \\
+    \cmidrule(lr){2-3}
+    \multirowcell{-4}[0.3ex]{Mean effect size, \\averaging\\ across countries}& {\thead{Ineffective\\ arms}} & {\thead{Effective\\ arms}} & {\multirowcell{-1}[-1ex]{Difference}}
+    \\[-1.4ex]
+    \midrule
+    Small & 4.6 & 5.3 & 0.8 \\
+    Medium & 4.6 & 8.5 & 3.9 \\
+    Large & 4.6 & 13.3 & 8.7
+  \end{tabularx}
 \begin{flushleft}
 {\footnotesize{Note: The probabilities of course completion given a small mean effect size are equal to those observed by Martinez. For the medium and large mean effect sizes, the difference values were chosen to be 0.5 and 1 units greater on the logit scale than the treatment-control difference observed by Martinez. Throughout, we assume that---on average across countries---two of the intervention arms are effective and two are no more effective than the control.}}
-\end{flushleft} 
+\end{flushleft}    
 \end{table}
 
 \section{Results}
