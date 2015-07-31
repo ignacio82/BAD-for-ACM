@@ -30,6 +30,10 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \graphicspath{ {Figures/} }
+\usepackage[capposition=top]{floatrow}
+
+\usepackage{makecell}
+\usepackage{siunitx}
 
 \begin{document}
 
@@ -114,10 +118,17 @@ In particular, we describe conditions under which there is more than a 90 percen
 Under the right circumstances, then, the Bayesian adaptive approach we propose can channel streams of big data to efficiently learn what works for whom.
 \end{abstract}
 
-% A category with the (minimum) three required fields
-\category{H.4}{Information Systems Applications}{Miscellaneous}
+
 %A category including the fourth, optional field follows...
-\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+\category{C.1.1}{Econometric and Statistical Methods and Methodology}{Bayesian Analysis}[General]
+\category{C.1.3}{Econometric and Statistical Methods and Methodology}{Estimation}[General]
+\category{C.1.5}{Econometric and Statistical Methods and Methodology}{Statistical Simulation}[General]
+\category{C.3.1}{Multiple or Simultaneous Equation Models}{Multiple Variables}[Treatment Effect Models]
+\category{C.4.4}{Econometric and Statistical Methods}{Special Topics}[Statistical Decision Theory]
+\category{C.5.4}{Econometric Modeling}{Quantitative Policy Modeling}
+\category{C.5.5}{Econometric Modeling}{- Data Sets}[Modeling and Analysis]
+\category{C.6.3}{Mathematical Methods}{ Programming Models}[Mathematical and Simulation Modeling: Computational Techniques - Simulation Modeling]
+\category{C.9.0}{Design of Experiments}{General}
 
 \terms{Methods}
 
@@ -194,9 +205,10 @@ Under the Bayesian adaptive design, starting with cohort 1, we thus pursue the g
 
 \begin{figure}
 \centering
-\epsfig{file=./Figures/Timeline.eps, width=0.45\textwidth}
+\epsfig{file=./Figures/Timeline.eps, width=\textwidth}
 \caption{In each country, as evidence accumulates during the course of a Bayesian adaptive trial, more students are randomized to the treatment arms that are most promising.}
 \label{fig:timeline2}
+{\floatfoot{Note: At baseline (corresponding to weeks 0-5 in Figure~\ref{fig:timeline}), students from cohort 1 enroll and we randomize them to one of five treatment arms and nudge accordingly. At time 1, (corresponding to weeks 6 and 7 in Figure~\ref{fig:timeline}), we observe the course completion outcomes of students from cohort 1 and we randomize and nudge students from cohort 2. At time 2, (corresponding to weeks 8 and 9 in Figure~\ref{fig:timeline}), we observe the course completion outcomes of students from cohort 2 and we randomize and nudge students from cohort 3.}}
 \end{figure}
 
 We learn as we go, adapting our randomization scheme as follows:
@@ -227,18 +239,31 @@ In choosing the true course completion rates, we assume that—on average across
     \item Sample size: 10, 50, and 100 percent of the actual sample size of 23,461 students.
 \end{itemize}
 
-
-\begin{table}[]
+\begin{table}
+    \linespread{0.9}
 \centering
 \caption{Three possible values of the difference in the probability of course completion of students assigned to effective versus ineffective treatment arms.}
 \label{my-label}
-\begin{tabular}{rccc}
-\multicolumn{1}{c}{\multirow{2}{*}{Mean effect size, averaging across countries}} & \multicolumn{2}{l}{\begin{tabular}[c]{@{}l@{}}Probability\\ of course completion (\%)\end{tabular}} & \multicolumn{1}{l}{\multirow{2}{*}{Difference}} \\
-\multicolumn{1}{c}{} & \multicolumn{1}{l}{\begin{tabular}[c]{@{}l@{}}Ineffective\\ arms\end{tabular}} & \multicolumn{1}{l}{\begin{tabular}[c]{@{}l@{}}Effective\\ arms\end{tabular}} & \multicolumn{1}{l}{} \\
-Small & 4.6 & 5.3 & 0.8 \\
-Medium & 4.6 & 8.5 & 3.9 \\
-Large & 4.6 & 13.3 & 8.7
+\begin{tabular}{rSSS}
+    \hline
+\thead{Mean effect size,\\
+       averaging across \\countries} 
+    &   \multicolumn{2}{c}{\thead{Probability of \\ 
+                                  course completion\\
+                                  (\%)}}
+            &   {\thead{Difference}}                           \\
+    \hline
+    &   {\thead{Ineffective\\ arms}}
+        &   {\thead{Effective\\ arms}} 
+            &                                                   \\
+    \hline
+Small   & 4.6   & 5.3   & 0.8 \\
+Medium  & 4.6   & 8.5   & 3.9 \\
+Large   & 4.6   & 13.3  & 8.7
 \end{tabular}
+\begin{flushleft}
+{\footnotesize{Note: The probabilities of course completion given a small mean effect size are equal to those observed by Martinez. For the medium and large mean effect sizes, the difference values were chosen to be 0.5 and 1 units greater on the logit scale than the treatment-control difference observed by Martinez. Throughout, we assume that---on average across countries---two of the intervention arms are effective and two are no more effective than the control.}}
+\end{flushleft}
 \end{table}
 
 \section{Results}
@@ -246,26 +271,28 @@ In this section we show that Bayesian adaptive design offers a promising new app
 In particular, we demonstrate advantages against the standard approach in terms of (1) the successful allocation of experimental subjects to more effective treatment arms, (2) the final inference produced, and (3) the total sample size required. 
 
 \subsection{Does the Bayesian adaptive design succeed in allocating its experimental subjects to more effective treatment arms?}
-The Bayesian adaptive design takes advantage of the information learned during the course of the experiment, successfully assigning more students to more effective treatment arms during the trial. Figure~\ref{fig:3} shows that, as a result, it nudges more of its experimental subjects to complete the course than does the standard design. This is the case in at least 50 percent of simulations for all nine combinations of sample size and mean effect size that we consider, as shown in the figure using horizontal black lines in the middle of each box plot. For five of the nine combinations (when the mean effect size is large, and—for the full sample size and for 50 percent of the full sample size—when the effect size is medium), this is the case in all 1,000 simulations. In these five scenarios, we observe median increases of at least 30 percent in course completion rates among experimental subjects. 
+The Bayesian adaptive design takes advantage of the information learned during the course of the experiment, successfully assigning more students to more effective treatment arms during the trial. Figure~\ref{fig:3} shows that, as a result, it nudges more of its experimental subjects to complete the course than does the standard design. This is the case in at least 50 percent of simulations for all nine combinations of sample size and mean effect size that we consider, as shown in the figure using horizontal black lines in the middle of each box plot. For five of the nine combinations (when the mean effect size is large, and---for the full sample size and for 50 percent of the full sample size---when the effect size is medium), this is the case in all 1,000 simulations. In these five scenarios, we observe median increases of at least 30 percent in course completion rates among experimental subjects. 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.45\textwidth]{fig3}
+\includegraphics[width=\textwidth]{fig3}
 \caption{The Bayesian adaptive design successfully allocates its experimental subjects to more effective treatment arms than the standard design.}
 \label{fig:3}
+{\floatfoot{Note: For each of the nine scenarios considered, a boxplot summarizes the distribution across 1,000 simulations of the percent change in the course completion rate of experimental subjects of the Bayesian adaptive design compared to the standard design. For example, a y-axis value of 20 percent indicates a simulation in which the course completion rate of experimental subjects is 20 percent higher under the Bayesian adaptive design than under the standard design. In each boxplot, the horizontal black line depicts the median of the distribution; the upper and lower ``hinges'' depict the 25th and 75th percentiles; the ``whiskers'' extend from the hinges to the most extreme values that are within 1.5 times the inter-quartile range; outliers beyond the end of the whiskers are plotted as points.}}
 \end{figure}
 
 Across sample sizes, we note that the Bayesian adaptive design is especially successful at increasing the course completion rate of its experimental subject when the mean effect size is large. This is because when effect sizes are larger, the effective treatment arms to which the Bayesian design succeeds in allocating its subjects are associated with higher probabilities of course completion. 
 
 \subsection{Does the Bayesian adaptive design produce better final inference?}
-We next turn to the important question of whether the Bayesian adaptive design produces better final inference than the standard design. We quantify the quality of the final inference using the following measure of predictive performance: Based on the final inference from the Bayesian adaptive design, choose a 'best' nudging strategy in each country. Now enroll a new cohort of students in the next edition of the course. Nudge each student using the chosen strategy for his or her country. How many more students from this new cohort would be expected to complete the course using this strategy than had their nudge been chosen based on inference from the standard design? 
+We next turn to the important question of whether the Bayesian adaptive design produces better final inference than the standard design. We quantify the quality of the final inference using the following measure of predictive performance: Based on the final inference from the Bayesian adaptive design, choose a ``best'' nudging strategy in each country. Now enroll a new cohort of students in the next edition of the course. Nudge each student using the chosen strategy for his or her country. How many more students from this new cohort would be expected to complete the course using this strategy than had their nudge been chosen based on inference from the standard design? 
 As shown in Figure 4, the Bayesian adaptive design outperforms the standard design by this metric in at least 50 percent of simulations for all nine combinations of sample size and mean effect size that we consider. It performs better in at least 95 percent of simulations in four of the nine scenarios (for the full sample size and for 50 percent of the full sample size, when the mean effect size is medium or large). These gains are achieved because the Bayesian adaptive design—by concentrating sample size in those treatment arms that seem most promising—achieves more power to compare successful treatments that differ in effectiveness only slightly. This higher power enables the Bayesian adaptive design to distinguish among successful treatment arms, ultimately identifying the most effective. 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.45\textwidth]{fig4}
+\includegraphics[width=\textwidth]{fig4}
 \caption{The Bayesian adaptive design produces better final inference than the standard design.}
 \label{fig:4}
+{\floatfoot{Note: For each of the nine scenarios considered, a boxplot summarizes the distribution across 1,000 simulations of the percent change in the course completion rate based on inference from the Bayesian adaptive design compared to inference from the standard design. For example, a y-axis value of 20 percent indicates a simulation in which the course completion rate increases by 20 percent if you choose which arm to assign students to based on the results of the Bayesian adaptive design versus if you choose based on the results of the standard design. In each boxplot, the horizontal black line depicts the median of the distribution; the upper and lower ``hinges'' depict the 25th and 75th percentiles; the ``whiskers'' extend from the hinges to the most extreme values that are within 1.5 times the inter-quartile range; outliers beyond the end of the whiskers are plotted as points.}}
 \end{figure}
 
 Whereas Figure~\ref{fig:4} showed large benefits of the Bayesian adaptive design for large effect sizes, this metric shows the biggest gains for medium effect sizes. This is because, given large effect sizes, the standard design can often successfully identify the best treatment arm, leaving less room for improvement. 
@@ -273,9 +300,10 @@ We now consider which types of countries benefit most from the Bayesian adaptive
 
 \begin{figure}
 \centering
-\includegraphics[width=0.45\textwidth]{fig5}
+\includegraphics[width=\textwidth]{fig5}
 \caption{The Bayesian adaptive design produces better inference than the standard design in all countries, and the benefits are largest in medium-sized countries.}
 \label{fig:5}
+{\floatfoot{Note: Averaging across the 1,000 simulations, we show the percent change in each country of the course completion rate based on inference from the Bayesian adaptive design compared to inference from the standard design. For example, a y-axis value of 20 percent indicates a country in which the course completion rate increases by an average of 20 percent if you choose which arm to assign students to based on the results of the Bayesian adaptive design versus if you choose based on the results of the standard design. The x-axis shows the country’s sample size. We consider only a single combination of sample size and mean effect size (the full sample size with small mean effect sizes, corresponding to the actual conditions of Martinez’s study). The blue line shows a loess smooth, and the grey shading shows a 95 percent confidence interval around the smooth.}}
 \end{figure}
 
 \subsection{Can the Bayesian adaptive design learn earlier and with smaller sample size what works for whom?}
@@ -283,9 +311,10 @@ Our final analysis determines how early in the study the Bayesian adaptive desig
 
 \begin{figure}
 \centering
-\includegraphics[width=0.45\textwidth]{fig6}
+\includegraphics[width=\textwidth]{fig6}
 \caption{The Bayesian adaptive design learns what works for whom earlier in the study than the standard design}
 \label{fig:6}
+{\floatfoot{Note: We compare the two designs using the following measure of predictive performance. Based on the inference from the Bayesian adaptive design after collecting X cohorts worth of data, choose a ``best'' nudging strategy in each country. Now enroll a new cohort of students in the next edition of the course. Nudge each student using the chosen strategy for his or her country. Would more students be expected to complete the course using this strategy than had their nudge been chosen based on inference from the standard design after collecting all 26 cohorts' worth of data? After each cohort, in each simulation, we determine whether the Bayesian adaptive design would produce better inference by this metric. We calculate the probabilities shown here as the proportion of simulations for which this is the case. For example, for an x-axis value of 10 cohorts, a y-axis value of 60 percent indicates that in 60 percent of simulations, course completion rates based on analyzing 10 cohorts' worth of data from the Bayesian adaptive design were higher than those based on an analysis of all 26 cohorts' worth of data from the standard design.}}
 \end{figure}
 
 \section{Extensions}
