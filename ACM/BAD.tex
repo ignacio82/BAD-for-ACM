@@ -27,13 +27,16 @@
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{acm_proc_article-sp}
-\usepackage{multirow}
 \usepackage{graphicx}
 \graphicspath{ {Figures/} }
 \usepackage[capposition=top]{floatrow}
 
+\usepackage{lipsum}
+\usepackage{multirow, tabularx, caption, booktabs}
 \usepackage{makecell}
+\renewcommand\cellalign{rc}
 \usepackage{siunitx}
+\sisetup{table-format=1.1}
 
 \begin{document}
 
@@ -101,7 +104,7 @@ Ignacio Martinez\\
 % author on the opening page (as the 'third row') but we ask,
 % for aesthetic reasons that you place these 'additional authors'
 % in the \additional authors block, viz.
-\date{07 July 2015}
+\date{31 July 2015}
 % Just remember to make sure that the TOTAL number of authors
 % is the number that will appear on the first page PLUS the
 % number that will appear in the \additionalauthors section.
@@ -190,22 +193,22 @@ The outcome of interest is successful completion of the course in week 6.
 As shown in Figure~\ref{fig:timeline}, this schedule assumes that outcomes from any given cohort are observed in time to inform randomization of the next cohort. 
 We discuss two ways to loosen this assumption in the Discussion. 
 
-\begin{figure*}
+\begin{figure}
 \centering
-\epsfig{file=./Figures/vertchart.eps}
+\epsfig{file=./Figures/Timeline.eps, width=\textwidth}
 \caption{We consider a six-week course in which 26 cohorts of students participated over the course of a year, with start dates spaced two weeks apart. For illustrative purposes, we show the first 3 of 26 cohorts here.}
 \label{fig:timeline}
-\end{figure*}
+\end{figure}
 
 To answer our research questions, we compare two possible five-arm designs via simulation. 
 The specific approach we use to simulate synthetic data sets under each of these designs is described in the next section. 
-The remainder of this section describes the two designs: (1) a standard five-arm randomized design that uses equal randomization probabilities of 20 percent per arm throughout the study, and (2) a Bayesian adaptive design in which information gleaned in the earlier stages of the trial influences which nudging strategies are used in each country later in the trial such that—as the study progresses and we learn what works for whom—each subject has an increasing probability of being randomized to the treatment arm that is most effective in his or her country. 
+The remainder of this section describes the two designs: (1) a standard five-arm randomized design that uses equal randomization probabilities of 20 percent per arm throughout the study, and (2) a Bayesian adaptive design in which information gleaned in the earlier stages of the trial influences which nudging strategies are used in each country later in the trial such that---as the study progresses and we learn what works for whom---each subject has an increasing probability of being randomized to the treatment arm that is most effective in his or her country. 
 By concentrating the sample size in those country-by-strategy pairs that seem most promising, we aim to increase our power to identify the most effective strategy in each country. 
 Under the Bayesian adaptive design, starting with cohort 1, we thus pursue the goal of learning which nudging strategy is most effective for students from each country, as shown in Figure~\ref{fig:timeline2}. 
 
 \begin{figure}
 \centering
-\epsfig{file=./Figures/Timeline.eps, width=\textwidth}
+\epsfig{file=./Figures/vertchart.eps, width=\textwidth}
 \caption{In each country, as evidence accumulates during the course of a Bayesian adaptive trial, more students are randomized to the treatment arms that are most promising.}
 \label{fig:timeline2}
 {\floatfoot{Note: At baseline (corresponding to weeks 0-5 in Figure~\ref{fig:timeline}), students from cohort 1 enroll and we randomize them to one of five treatment arms and nudge accordingly. At time 1, (corresponding to weeks 6 and 7 in Figure~\ref{fig:timeline}), we observe the course completion outcomes of students from cohort 1 and we randomize and nudge students from cohort 2. At time 2, (corresponding to weeks 8 and 9 in Figure~\ref{fig:timeline}), we observe the course completion outcomes of students from cohort 2 and we randomize and nudge students from cohort 3.}}
@@ -216,7 +219,7 @@ We learn as we go, adapting our randomization scheme as follows:
     \item Before the course begins, what works for whom is not known, so randomize cohort 1 with 20 percent probability to each of the five arms, and nudge accordingly.
     \item Observe who from cohort 1 completes the course.
     \item Use these data to update our understanding of which intervention arm is most effective for students in each country, by fitting a Bayesian model to the data from cohort 1. The model is described in the Appendix.
-    \item For cohort 2, randomize students according to this updated understanding, with students randomized preferentially to the treatment arms that—based on the accumulated data—are estimated to be most effective in their country.
+    \item For cohort 2, randomize students according to this updated understanding, with students randomized preferentially to the treatment arms that---based on the accumulated data---are estimated to be most effective in their country.
     \item Observe who from cohort 2 completes the course.
     \item Use these data to update our understanding again, by refitting the model to the data set that now includes students from cohorts 1 and 2.
     \item Randomize cohort 3 accordingly.
@@ -224,16 +227,16 @@ We learn as we go, adapting our randomization scheme as follows:
     \item Continue to adapt the randomization scheme in this fashion for cohorts 4 through 26.
 \end{itemize}
 
-Although some current approaches to policy evaluation are adaptive in limited ways (for example, those with early stopping rules if an intervention is wildly successful or clearly harmful), the standard, frequentist statistical paradigm inhibits flexible adaptation with its requirement that all possible study outcomes be prespecified. Under the Bayesian paradigm, by contrast, researchers are only required to prespecify—using formal, probabilistic statements of uncertainty—how a design will change as evidence accumulates \cite{berry2006bayesian, george1994stopping}. In this way, the Bayesian approach learns continually from every cohort's outcomes rather than incorporating new information only at widely spaced intervals. We will show that this flexibility facilitates efficient determination of what works for whom by making optimal use of data as they are collected.
+Although some current approaches to policy evaluation are adaptive in limited ways (for example, those with early stopping rules if an intervention is wildly successful or clearly harmful), the standard, frequentist statistical paradigm inhibits flexible adaptation with its requirement that all possible study outcomes be prespecified. Under the Bayesian paradigm, by contrast, researchers are only required to prespecify---using formal, probabilistic statements of uncertainty---how a design will change as evidence accumulates \cite{berry2006bayesian, george1994stopping}. In this way, the Bayesian approach learns continually from every cohort's outcomes rather than incorporating new information only at widely spaced intervals. We will show that this flexibility facilitates efficient determination of what works for whom by making optimal use of data as they are collected.
 
-We pair this Bayesian adaptive design with a hierarchical Bayesian approach to analysis. This approach enables us to ‘borrow strength' across countries, refining our understanding of an intervention's effectiveness for each specific country by drawing on data from other countries in the region, to the extent that the data support such a linkage. For example, in inferring whether a given nudging strategy is effective in India, we take a weighted average of the proportion of Indian course completers who received the nudge with the proportion of South Asian course completers who received the nudge. The weights are not specified in advance, but rather determined by (1) the degree of concordance across results from different countries within a region and (2) the strength of the evidence based on data for Indian students alone. More weight will be assigned to the contextual region-level (i.e., South Asian) data in those cases with a high degree of concordance or when the country-specific (i.e., Indian) evidence is weak, for example due to a small sample size in India. Similarly, inference for any specific region draws on data from the other regions of the world. For example, because the course Martinez studied included only eight students from the region of Oceania, the Bayesian hierarchical model borrows strength from other regions to make estimates in those small island nations. Borrowing strength across countries within a region and across regions of the globe—to the extent determined by the data—can produce more precise, more predictive inference \cite{gelman2014bayesian} and ultimately smaller, less costly trials \cite{berry2010bayesian}.
+We pair this Bayesian adaptive design with a hierarchical Bayesian approach to analysis. This approach enables us to ‘borrow strength' across countries, refining our understanding of an intervention's effectiveness for each specific country by drawing on data from other countries in the region, to the extent that the data support such a linkage. For example, in inferring whether a given nudging strategy is effective in India, we take a weighted average of the proportion of Indian course completers who received the nudge with the proportion of South Asian course completers who received the nudge. The weights are not specified in advance, but rather determined by (1) the degree of concordance across results from different countries within a region and (2) the strength of the evidence based on data for Indian students alone. More weight will be assigned to the contextual region-level (i.e., South Asian) data in those cases with a high degree of concordance or when the country-specific (i.e., Indian) evidence is weak, for example due to a small sample size in India. Similarly, inference for any specific region draws on data from the other regions of the world. For example, because the course Martinez studied included only eight students from the region of Oceania, the Bayesian hierarchical model borrows strength from other regions to make estimates in those small island nations. Borrowing strength across countries within a region and across regions of the globe---to the extent determined by the data---can produce more precise, more predictive inference \cite{gelman2014bayesian} and ultimately smaller, less costly trials \cite{berry2010bayesian}.
 
 \section{Simulation Study}
 To compare the Bayesian adaptive design's performance to that of the standard method of subject allocation in randomized trials, we simulate and analyze synthetic data sets. To identify the conditions under which the Bayesian adaptive design produces benefits, we simulate data sets under each of nine scenarios characterized by different sample sizes and different effect sizes. However, acknowledging that in any given simulated data set the Bayesian adaptive design might perform better or worse than the standard design just by chance alone, we conduct 1,000 simulations of each of the two designs in each of the nine scenarios. In each scenario, we thus simulate and analyze 1,000 synthetic data sets using the standard approach and 1,000 synthetic data sets using the proposed approach.
 
 For each simulation, we assume a true course completion rate in each country under each of the five treatment arms. For example, in the control arm in the United States, the first simulation might assume that the true course completion rate is 4 percent. We then generate two synthetic data sets, one under the Bayesian adaptive design and one under the standard design. In each case, we randomly assign computer-generated 'students' to each of the five treatment arms, with randomization probabilities chosen for each design as we describe in the Methods section. We randomly generate simulated course completion outcomes for each synthetic student in each data set, with probability corresponding to the assumed truth, given the student's country and assigned treatment arm. For example, if the first synthetic student from the first simulation was from the United States and was randomized to the control arm, with 4 percent probability we would say that the student had completed the course and with 96 percent probability we would say that the student had not completed the course. For simplicity, the simulation design assumes that each cohort comprises 1/26 of the total sample size.
 
-In choosing the true course completion rates, we assume that—on average across countries—two of the intervention arms are effective and two are no more effective than control. As we will show in the Results section, the difference in the probability of course completion of students assigned to effective versus ineffective arms is an important determinant of the performance of the Bayesian design. We therefore consider three values of this difference. In addition to these mean effect sizes, we assume regional and country-level heterogeneity, to allow some interventions to be more or less effective in some regions or countries than others, with the magnitude of heterogeneity chosen to reflect the true amount of heterogeneity that Martinez observed. The Appendix details the process through which we induce this heterogeneity. We also consider three possible sample sizes. The pair-wise combinations of mean effect size and total sample size characterize the nine scenarios we consider to assess the conditions under which our Bayesian approach performs more and less well. The values of each factor that we consider are:
+In choosing the true course completion rates, we assume that---on average across countries---two of the intervention arms are effective and two are no more effective than control. As we will show in the Results section, the difference in the probability of course completion of students assigned to effective versus ineffective arms is an important determinant of the performance of the Bayesian design. We therefore consider three values of this difference. In addition to these mean effect sizes, we assume regional and country-level heterogeneity, to allow some interventions to be more or less effective in some regions or countries than others, with the magnitude of heterogeneity chosen to reflect the true amount of heterogeneity that Martinez observed. The Appendix details the process through which we induce this heterogeneity. We also consider three possible sample sizes. The pair-wise combinations of mean effect size and total sample size characterize the nine scenarios we consider to assess the conditions under which our Bayesian approach performs more and less well. The values of each factor that we consider are:
 \begin{itemize}
     \item Mean effect size (i.e., the difference in the probability of course completion of students assigned to effective versus ineffective arms), averaging across countries: small, medium, and large, as detailed in the Table. 
     \item Sample size: 10, 50, and 100 percent of the actual sample size of 23,461 students.
@@ -245,14 +248,11 @@ In choosing the true course completion rates, we assume that—on average across
 \caption{Three possible values of the difference in the probability of course completion of students assigned to effective versus ineffective treatment arms.}
 \label{my-label}
 \begin{tabular}{rSSS}
-    \hline
 \thead{Mean effect size,\\
        averaging across \\countries} 
     &   \multicolumn{2}{c}{\thead{Probability of \\ 
-                                  course completion\\
-                                  (\%)}}
+                                  course completion (\%)}}
             &   {\thead{Difference}}                           \\
-    \hline
     &   {\thead{Ineffective\\ arms}}
         &   {\thead{Effective\\ arms}} 
             &                                                   \\
@@ -263,7 +263,7 @@ Large   & 4.6   & 13.3  & 8.7
 \end{tabular}
 \begin{flushleft}
 {\footnotesize{Note: The probabilities of course completion given a small mean effect size are equal to those observed by Martinez. For the medium and large mean effect sizes, the difference values were chosen to be 0.5 and 1 units greater on the logit scale than the treatment-control difference observed by Martinez. Throughout, we assume that---on average across countries---two of the intervention arms are effective and two are no more effective than the control.}}
-\end{flushleft}
+\end{flushleft} 
 \end{table}
 
 \section{Results}
@@ -285,7 +285,7 @@ Across sample sizes, we note that the Bayesian adaptive design is especially suc
 
 \subsection{Does the Bayesian adaptive design produce better final inference?}
 We next turn to the important question of whether the Bayesian adaptive design produces better final inference than the standard design. We quantify the quality of the final inference using the following measure of predictive performance: Based on the final inference from the Bayesian adaptive design, choose a ``best'' nudging strategy in each country. Now enroll a new cohort of students in the next edition of the course. Nudge each student using the chosen strategy for his or her country. How many more students from this new cohort would be expected to complete the course using this strategy than had their nudge been chosen based on inference from the standard design? 
-As shown in Figure 4, the Bayesian adaptive design outperforms the standard design by this metric in at least 50 percent of simulations for all nine combinations of sample size and mean effect size that we consider. It performs better in at least 95 percent of simulations in four of the nine scenarios (for the full sample size and for 50 percent of the full sample size, when the mean effect size is medium or large). These gains are achieved because the Bayesian adaptive design—by concentrating sample size in those treatment arms that seem most promising—achieves more power to compare successful treatments that differ in effectiveness only slightly. This higher power enables the Bayesian adaptive design to distinguish among successful treatment arms, ultimately identifying the most effective. 
+As shown in Figure 4, the Bayesian adaptive design outperforms the standard design by this metric in at least 50 percent of simulations for all nine combinations of sample size and mean effect size that we consider. It performs better in at least 95 percent of simulations in four of the nine scenarios (for the full sample size and for 50 percent of the full sample size, when the mean effect size is medium or large). These gains are achieved because the Bayesian adaptive design---by concentrating sample size in those treatment arms that seem most promising---achieves more power to compare successful treatments that differ in effectiveness only slightly. This higher power enables the Bayesian adaptive design to distinguish among successful treatment arms, ultimately identifying the most effective. 
 
 \begin{figure}
 \centering
